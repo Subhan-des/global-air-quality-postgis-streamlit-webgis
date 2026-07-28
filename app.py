@@ -82,3 +82,16 @@ with col2:
     st.subheader("Regional Summary")
     st.metric(label="Selected Buffer Radius", value=f"{buffer_dist} km")
     st.info("Sentinel-5P TROPOMI sensor collects atmospheric tropospheric vertical column density of NO₂ measured in mol/m².")
+# Updated GEE Initialization inside app.py
+PROJECT_ID = 'flood-extent-mapping-punjab'
+
+@st.cache_resource
+def init_gee():
+    try:
+        ee.Initialize(project=PROJECT_ID)
+        st.sidebar.success("✅ Connected to Google Earth Engine")
+    except Exception as e:
+        st.sidebar.error("❌ GEE Connection Failed. Authenticate in Colab first.")
+        st.error(f"Earth Engine Error: {e}")
+
+init_gee()
